@@ -1,9 +1,12 @@
-data <- read.csv('household_power_consumption.txt', sep=';')
+data <- read.csv('household_power_consumption.txt', sep=';',stringsAsFactors=FALSE)
 data[,1] <- as.Date(data[,1],'%d/%m/%Y')
 ld = as.Date('2007-02-01','%Y-%m-%d')
 rd = as.Date('2007-02-02','%Y-%m-%d')
 df = data[data[,1]>=ld & data[,1]<=rd,]
 df[,3] <- as.numeric(df[,3])
 x <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S")
+par(bg="transparent")
 plot(x, df$Global_active_power/500, xlab='', ylab="Global Active Power (kilowatts)", type="n")
 lines(x, df$Global_active_power/500)
+dev.copy(png, file = "plot2.png", width=480, height=480)
+dev.off() 
